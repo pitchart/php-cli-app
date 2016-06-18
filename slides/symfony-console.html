@@ -12,9 +12,10 @@
 </section>
 <section>
     <h3>Installation</h3>
-    <pre><code data-trim contenteditable class="hljs bash">
-        $ php composer.phar require symfony/console
-    </code></pre>
+<pre><code data-trim contenteditable class="hljs bash">
+$ php composer.phar init
+$ php composer.phar require symfony/console
+</code></pre>
 </section>
 <section>
     <h3>Architecture</h3>
@@ -57,11 +58,11 @@ $application-&gt;run();
 <section>
     <h3>Créer une commande</h3>
     <pre><code class="hljs php">
-    use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Command\Command;
 
-    class HelloCommand extends Command {
-        ...
-    }
+class HelloCommand extends Command {
+    ...
+}
     </code></pre>
 </section>
 <section>

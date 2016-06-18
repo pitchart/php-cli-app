@@ -1,5 +1,5 @@
 <section>
-    <h2>Gestion des sorties</h2>
+    <h2>Gestion des I/O</h2>
 </section>
 <section>
     <h3>Messages sur la sortie standard</h3>
@@ -32,6 +32,7 @@ $confirmation = new ConfirmationQuestion('<comment>Are you OK ?</comment> ', tru
 <section>
 <pre><code class="hljs php">
 $questionHelper = $this->getHelper('question');
+
 $name = $questionHelper->ask($input, $output, $question);
 $language = $questionHelper->ask($input, $output, $choice);
 if ($questionHelper->ask($input, $output, $confirmation)) {
