@@ -183,6 +183,9 @@
     background-color: #f0f0f0;
 }
 
+.text-left {text-align: left !important;}
+.italic {font-style: italic !important;}
+
 .vam { vertical-align: middle !important;}
 
 .subtitle {font-style: italic !important; color: #DDD;}

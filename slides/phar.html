@@ -52,8 +52,7 @@ $phar->setStub($phar->createDefaultStub("app.php"));
 </section>
 <section>
     <h4>Configuration du build</h4>
-    <pre><code class="hljs javascript js">
-//box.json.dist
+    <pre><code lang="en-en" contenteditable class="hljs javascript js">//box.json.dist
 {
     "chmod": "0755",
     "compression": "GZ",
@@ -76,8 +75,7 @@ $phar->setStub($phar->createDefaultStub("app.php"));
     "main": "bin/cli-app-demo",
     "output": "build/cli-app-demo.phar",
     "stub": true
-}
-    </code></pre>
+}</code></pre>
 </section>
 <section>
     <h4>Lancer le build</h4>
@@ -99,5 +97,9 @@ $phar->setStub($phar->createDefaultStub("app.php"));
 </section>
 <section>
     <h3>Précautions</h3>
-    <p><span class="t3-color">Attention au choix des librairies :</span> pas de dossier cache/ ou logs/ disponible dans un <span class="php-color">phar</span></p>
+    <p><span class="t3-color">Attention au choix des librairies :</span></p>
+    <ul>
+        <li>pas de dossier cache/ ou logs/ disponible dans un <span class="php-color">phar</span></li>
+        <li>possibilité d'utiliser <span class="php-color">php://memory</span> et <span class="php-color">php://temp</span> (pas pour de la gestion de cache ...)</li>
+    </ul>
 </section>
