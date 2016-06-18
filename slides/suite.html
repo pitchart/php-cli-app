@@ -1,0 +1,47 @@
+<section>
+    <h2>Pour aller plus loin</h2>
+</section>
+<section>
+    <h3>Sécuriser l'utilisation de l'archive</h3>
+    <ul>
+        <li class="fragment">Chiffrer l'archive par clé RSA</li>
+        <li class="fragment">Déployer la clé publique</li>
+    </ul>
+</section>
+<section>
+    <h3>Automatiser le build et le déploiement</h3>
+    <div class="fragment">
+    <p>Actuellement, utilisation de make</p>
+    <pre><code>
+test: phpunit
+build: test box sha1
+
+box:
+    php box.phar build
+
+sha1:
+    sha1sum build/cli-app-demo.phar > build/cli-app-demo.phar.version
+
+phpunit:
+    phpunit tests/
+    </code></pre>
+    </div>
+</section>
+<section>
+    <p>Remplacer make par phing pour automatiser :</p>
+    <ul>
+        <li class="fragment">L'installation des sources (hors dev)</li>
+        <li class="fragment">L'analyse statique du code</li>
+        <li class="fragment">L'exécution des test</li>
+        <li class="fragment">Le build de l'application</li>
+        <li class="fragment">La génération des fichiers de vérification</li>
+        <li class="fragment">La publication du fichier</li>
+    </ul>
+</section>
+<section>
+    <h3>Tester sur différents environnements <br>avec Travis CI</h3>
+    <ul>
+        <li>Synchronisation du build le projet Github</li>
+        <li>Publication du build avec les tags de version du projet</li>
+    </ul>
+</section>

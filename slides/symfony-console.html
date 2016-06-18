@@ -1,0 +1,120 @@
+<section>
+    <h2>symfony/console</h2>
+    <p><a href="http://symfony.com/doc/current/components/console/introduction.html">http://symfony.com/doc/current/components/console/introduction.html</a></p>
+</section>
+<section>
+    <p>Un composant indépendant permettant le développement de commandes en PHP</p>
+    <ul>
+        <li>Création de commandes</li>
+        <li>Gestion des arguments et options (inputs)</li>
+        <li>Aide à l'affichage et au formatage</li>
+    </ul>
+</section>
+<section>
+    <h3>Installation</h3>
+    <pre><code data-trim contenteditable class="hljs bash">
+        $ php composer.phar require symfony/console
+    </code></pre>
+</section>
+<section>
+    <h3>Architecture</h3>
+<pre><code class="hljs bash">
+├── .git/
+├── .gitignore
+├── bin/
+├── box.json.dist
+├── box.phar
+├── build/
+├── composer.json
+├── composer.lock
+├── Makefile
+├── src/
+├── test/
+└── vendor/
+</code></pre>
+</section>
+<section>
+    <h3>Base de l'application</h3>
+    <pre><code data-trim contenteditable class="hljs php">
+#!/usr/bin/env php
+&lt;?php
+
+// bin/app.php
+require __DIR__.'/../vendor/autoload.php';
+
+use Symfony\Component\Console\Application;
+
+$application = new Application('name', 'version');
+
+// Ajouter vos commandes ici : $application-&gt;add(...);
+
+$application-&gt;run();
+    </code></pre>
+    <div class="fragment">
+        <pre><code>$ php bin/app.php</code></pre>
+    </div>
+</section>
+<section>
+    <h3>Créer une commande</h3>
+    <pre><code class="hljs php">
+    use Symfony\Component\Console\Command\Command;
+
+    class HelloCommand extends Command {
+        ...
+    }
+    </code></pre>
+</section>
+<section>
+    <p>
+        Notre commande s'articule autour de 2 méthodes :
+    </p>
+<ul>
+    <li><strong>configure()</strong> pour définir le nom, la description et les eventuels arguments et options</li>
+    <li><strong>execute($input, $output)</strong> qui contient le code principal de l'exécution de la commande</li>
+</ul>
+
+</section>
+<section>
+<pre><code class="hljs php">use Symfony\Component\Console\Input\InputArgument;
+
+protected function configure()
+{
+    $this
+        ->setName('hello')
+        ->setDefinition(array(
+            new InputArgument('name', InputArgument::OPTIONAL, 'The command name', ''),
+        ))
+        ->setDescription('Says hello')
+        ->setHelp(<<<'EOF'
+The <info>%command.name%</info> command says hello thanks to symfony console:
+<info>php %command.full_name%</info>
+You can also say hello to someone using the 'name' argument
+<info>php %command.full_name% pitchart</info>
+EOF
+        )
+    ;
+}
+</code></pre>
+</section>
+<section>
+<pre><code class="hljs php">use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
+
+protected function execute(InputInterface $input, OutputInterface $output) {
+    $name = $input->getArgument('name');
+    if ($name) {
+        $output->writeln("Hello $name!");
+    }
+    else {
+        $output->writeln('Hello!');
+    }
+}
+</code></pre>
+</section>
+<section>
+<p class="title">La console symfony s'installe avec 2 commandes de base :</p>
+<ul>
+    <li><strong>list :</strong> liste les différentes commandes de l'application</li>
+    <li><strong>help</strong> (suivi du nom d'une commande) : donne la liste des arguments et options ainsi que des exemples d'utilisation définis par la méthode <em>configure()</em></li>
+</ul>
+</section>

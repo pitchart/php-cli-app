@@ -1,0 +1,65 @@
+<section>
+    <h2>Mises à jour de l'application</h2>
+</section>
+<section>
+    <p>Faciliter la récupération des nouvelles versions de l'application phar (pas de git pull)</p>
+    <p class="fragment">Récupérer la version précédente en cas d'echec de mise à jour ou d'incompatibilité</p>
+</section>
+<section>
+    <h3>padraic/phar-updater</h3>
+    <ul>
+        <li>Support complet des vérifications SSL/TLS (PHP < 5.6)</li>
+        <li>Prise en compte des phar avec signatures OpenSSL</li>
+        <li>Plusieurs stratégies de mise à jour (SHA-1, Github Release)</li>
+    </ul>
+</section>
+<section>
+    <h4>Stratégie "SHA-1"</h4>
+    <pre><code class="hljs php">
+use Humbug\SelfUpdate\Updater;
+
+$updater = new Updater(null, false);
+$updater->getStrategy()
+    ->setPharUrl('http://[username].github.io/[project]/[file].phar');
+$updater->getStrategy()
+    ->setVersionUrl('http://[username].github.io/[project]/[file].phar.version');
+    </code></pre>
+</section>
+<section>
+    <h4>Stratégie "Github Release"</h4>
+    <pre><code class="hljs php">
+use Humbug\SelfUpdate\Updater;
+
+$updater = new Updater(null, false);
+$updater->setStrategy(Updater::STRATEGY_GITHUB);
+$updater->getStrategy()->setPackageName('username/project');
+$updater->getStrategy()->setPharName('file.phar');
+$updater->getStrategy()->setCurrentLocalVersion('@package_version');
+    </code></pre>
+</section>
+<section>
+    <h4>La mise à jour</h4>
+    <pre><code class="hljs php">
+try {
+    $result = $updater->hasUpdate();
+    if ($result) {
+        $updater->update();
+        exit(sprintf(
+            'Updated from %s to %s',
+             $updater->getOldVersion(),
+             $updater->getNewVersion()
+         ));
+    }
+}
+catch (\Exception $e) { ... }
+    </code></pre>
+</section>
+<section>
+    <h4>Le rollback</h4>
+    <pre><code class="hljs php">
+try {
+    $result = $updater->rollback();
+}
+catch (\Exception $e) { ... }
+    </code></pre>
+</section>

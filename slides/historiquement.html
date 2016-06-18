@@ -1,0 +1,47 @@
+<section>
+    <h2>Legacy</h2>
+</section>
+<section>
+    <h3>$argc / $argv</h3>
+    <pre><code class="hljs php">#!/usr/bin/php
+&lt;?php
+
+//cli.php
+print "$argc argument(s) were passed."
+for ($i=0; $i < $argc ; $i++) { 
+    print "$i: $argv[$i]\n";
+}
+
+?>
+    </code></pre>
+</section>
+<section>
+<pre><code class="hljs bash">$ ./cli.php
+1 argument(s) were passed.
+0: ./cli.php
+</code></pre>
+<br>
+<pre><code class="hljs bash">$ ./cli.php --foo --bar fizz=buzz
+1 argument(s) were passed.
+0: ./cli.php
+1: --foo
+2: --bar
+3: fizz=buzz
+</code></pre>
+</section>
+<section>
+    <h3>getopt()</h3>
+<pre><code class="hljs php">
+$shortopts  = "f:";  // Valeur requise
+$shortopts .= "v::"; // Valeur optionnelle
+$shortopts .= "abc"; // Options a, b et c, aucune valeur
+
+$longopts  = array(
+    "required:",     // Valeur requise
+    "optional::",    // Valeur optionnelle
+    "option",        // Aucune valeur
+);
+
+$options = getopt($shortopts, $longopts);
+</code></pre>
+</section>

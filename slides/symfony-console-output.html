@@ -1,0 +1,73 @@
+<section>
+    <h2>Gestion des sorties</h2>
+</section>
+<section>
+    <h3>Messages sur la sortie standard</h3>
+    <div class="fragment">
+        <pre><code class="php hljs">use Symfony\Component\Console\Output\OutputInterface;</code></pre>
+    </div>
+    <div class="fragment">
+        <pre><code class="php hljs">$output->write('Your message here')</code></pre>
+    </div>
+    <div class="fragment">
+        <pre><code class="php hljs">$output->writeln('Your message on one line here')</code></pre>
+    </div>
+</section>
+<section>
+<h3>Interactions avec l'utilisateur</h3>
+<pre><code class="hljs php">
+use Symfony\Component\Console\Question\Question;
+use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Question\ConfirmationQuestion;
+
+$question = new Question("<info>What's your name ?</info> ", 'Pitchart');
+$choice = new ChoiceQuestion(
+    '<info>Please choose a language :</info> ',
+    ['PHP', 'Javascript', 'Phyton'],
+    0
+);
+$confirmation = new ConfirmationQuestion('<comment>Are you OK ?</comment> ', true);
+</code></pre>
+</section>
+<section>
+<pre><code class="hljs php">
+$questionHelper = $this->getHelper('question');
+$name = $questionHelper->ask($input, $output, $question);
+$language = $questionHelper->ask($input, $output, $choice);
+if ($questionHelper->ask($input, $output, $confirmation)) {
+    $output->writeln(sprintf('Hey %s, let\'s talk about %s!', $name, $language));
+}
+</code></pre>
+</section>
+<section>
+<h3>Barre de progression</h3>
+<pre><code class="hljs php">
+use Symfony\Component\Console\Helper\ProgressBar;
+
+$progress = new ProgressBar($output, 50);
+$progress->start();
+...
+$progress->advance();
+...
+$progress->finish();
+</code></pre>
+</section>
+<section>
+<h3>Gestion de commandes système</h3>
+<div class="subtitle fragment">
+    nécessite symfony/process
+</div>
+<div class="fragment">
+<pre><code class="hljs php">use Symfony\Component\Process\ProcessBuilder;
+
+$helper = $this->getHelper('process');
+
+$process = (new ProcessBuilder(array('ls', '-lsa')))
+    ->getProcess();
+
+$helper->run($output, $process, 'Oops, something went wrong :(');
+
+</code></pre>
+<code><pre>php bin/cli-app-demo.php demo:process -v[v[v]]</code></pre>
+</div>
+</section>
