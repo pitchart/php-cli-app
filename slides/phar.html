@@ -46,6 +46,9 @@ $phar->setStub($phar->createDefaultStub("app.php"));
 <section>
     <h4>Télécharger Box</h4>
 <pre><code>$ curl -LSs https://box-project.github.io/box2/installer.php | php</code></pre>
+<div class="fragment">
+    <img src="resources/img/veines.gif" alt="">
+</div>
 </section>
 <section>
     <h4>Configuration du build</h4>
@@ -80,11 +83,11 @@ $phar->setStub($phar->createDefaultStub("app.php"));
     <h4>Lancer le build</h4>
     <pre><code>$ box build -v</code></pre>
     <div class="fragment">
-        Zzzzzz Zzzzzzz
+        <img src="resources/img/courage.gif" alt="">
     </div>
 </section>
 <section>
-    <h4>Accélérer le build</h4>
+    <h3>Accélérer le build</h3>
     <pre><code>$ php composer.phar install --no-dev</code></pre>
     <div class="fragment">
         <ul>
@@ -92,4 +95,9 @@ $phar->setStub($phar->createDefaultStub("app.php"));
             <li class="fragment">fichier généré de taille moins importante</li>
         </ul>
     </div>
+    <div class="fragment"><img src="resources/img/mortel.gif" alt=""></div>
+</section>
+<section>
+    <h3>Précautions</h3>
+    <p><span class="t3-color">Attention au choix des librairies :</span> pas de dossier cache/ ou logs/ disponible dans un <span class="php-color">phar</span></p>
 </section>
