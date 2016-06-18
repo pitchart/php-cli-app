@@ -1,0 +1,95 @@
+<section>
+    <h2>Empaqueter les sources en archive PHP</h2>
+</section>
+<section>
+<h3>Prérequis</h3>
+<p>Autoriser les droits d'écriture sur les PHAR</p>
+<pre><code class="hljs bash">$ php --ini
+Configuration File (php.ini) Path: /etc/php5/cli
+Loaded Configuration File:         /etc/php5/cli/php.ini
+</code></pre>
+<pre><code>#/etc/php5/cli
+...
+phar.readonly = 0
+...
+</code></pre>
+</section>
+<section>
+<h3>En php natif</h3>
+<pre><code class="hljs php">
+&lt;?php
+$srcRoot = "/path/to/sources";
+$buildRoot = "/path/to/build";
+
+$phar = new Phar($buildRoot."/app.phar", 
+    FilesystemIterator::CURRENT_AS_FILEINFO | FilesystemIterator::KEY_AS_FILENAME, "app.phar");
+// Ajout des fichiers
+$$phar->buildFromIterator(
+    new RecursiveIteratorIterator(
+     new RecursiveDirectoryIterator($srcRoot.'/src')),
+    $srcRoot.'/src');
+$phar["index.php"] = file_get_contents($srcRoot."/bin/app.php");
+// Création du lanceur
+$phar->setStub($phar->createDefaultStub("app.php"));
+</code></pre>
+</section>
+<section>
+    <h3>Le projet Box</h3>
+    <p><a href="http://box-project.github.io/box2/">http://box-project.github.io/box2/</a></p>
+    <p class="fragment">
+        Une application pour créer des Phars
+    </p>
+    <p class="fragment">
+        Offre également des services supplémentaires, comme le remplacement de placeholders à la vollée lors de la création du phar.
+    </p>
+</section>
+<section>
+    <h4>Télécharger Box</h4>
+<pre><code>$ curl -LSs https://box-project.github.io/box2/installer.php | php</code></pre>
+</section>
+<section>
+    <h4>Configuration du build</h4>
+    <pre><code class="hljs javascript js">
+//box.json.dist
+{
+    "chmod": "0755",
+    "compression": "GZ",
+    "directories" : [
+        "config"
+    ],
+    "finder": [
+        {
+            "name": "*",
+            "exclude": ["Tests"],
+            "in": "src"
+        },
+        {
+            "name": "*.php",
+            "exclude": ["Tests", "Test", "tests", "test"],
+            "in": "vendor"
+        }
+    ],
+    "git-version": "package_version",
+    "main": "bin/cli-app-demo",
+    "output": "build/cli-app-demo.phar",
+    "stub": true
+}
+    </code></pre>
+</section>
+<section>
+    <h4>Lancer le build</h4>
+    <pre><code>$ box build -v</code></pre>
+    <div class="fragment">
+        Zzzzzz Zzzzzzz
+    </div>
+</section>
+<section>
+    <h4>Accélérer le build</h4>
+    <pre><code>$ php composer.phar install --no-dev</code></pre>
+    <div class="fragment">
+        <ul>
+            <li>temps de construction amélioré</li>
+            <li class="fragment">fichier généré de taille moins importante</li>
+        </ul>
+    </div>
+</section>

@@ -1,0 +1,42 @@
+<section>
+    <h2>Déploiement</h2>
+</section>
+<section>
+    <h3>Objectifs</h3>
+    <ul>
+        <li>Pouvoir télécharger l'application</li>
+        <li>Depuis un environnement sécurisé</li>
+        <li>Vérifier les données téléchargées</li>
+    </ul>
+</section>
+<section>
+    <h3>La solution Github</h3>
+    <p>Github fournit une solution de gestion de pages pour les projets hébergés, basée sur une branche spécifique du dépot.</p>
+    <p class="fragment">Github utilise HTTPS</p>
+</section>
+<section>
+    <div>
+        <h4>Cloner le dépot</h4>
+        <pre><code>$ git clone https://github.com/[username]/[projectname].git
+        </code></pre>
+    </div>
+    <div class="fragment">
+        <h4>Créer une branche non rattachée à l'historique</h4>
+        <pre><code>
+$ cd [projectname]
+$ git checkout --orphan gh-pages
+$ git rm -rf .
+$ rm .gitignore
+        </code></pre>
+    </div>
+    <div class="fragment">
+        https://[username].github.io/[projectname]
+    </div>
+</section>
+<section>
+    <h3>Vérifier les données téléchargées</h3>
+    <p>Création d'un hash SHA1</p>
+    <pre><code>$ sha1sum build/cli-app-demo.phar > build/cli-app-demo.phar.version</code></pre>
+    <p>Vérification des données</p>
+    <pre><code>$ sha1sum -c build/cli-app-demo.phar.version</code></pre>
+</section>
